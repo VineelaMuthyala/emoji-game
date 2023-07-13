@@ -1,0 +1,35 @@
+.win-lose-card {
+  width: 400px;
+  height: 400px;
+  background-color: #a3a2e9;
+  font-family: 'roboto';
+  border-radius: 8px;
+  color: white;
+  border-color: rgb(150, 144, 144);
+  border-width: 1px;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+}
+.win-lose-card-text {
+  display: flex;
+  flex-direction: column;
+}
+.title-text {
+  font-size: 20px;
+}
+.para {
+  font-size: 15px;
+}
+.button {
+  width: 80px;
+  height: 40px;
+  border: 0px;
+  background-color: #ffce27;
+  color: black;
+  border-radius: 5px;
+}
+.final-card-image {
+  width: 200px;
+  height: 200px;
+}

@@ -1,0 +1,32 @@
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 700px;
+  height: 50px;
+  background-color: #dcb7fa;
+}
+.emoji-logo-container {
+  display: flex;
+  flex-direction: row;
+  margin-left: 40px;
+}
+.emoji-game-logo {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+}
+.emoji-game-heading {
+  font-size: 18px;
+  font-family: 'roboto';
+}
+.score-container {
+  display: flex;
+  flex-direction: row;
+  margin-right: 30px;
+}
+.score-text {
+  font-size: 18px;
+  font-family: 'roboto';
+  margin: 10px;
+}

@@ -1,0 +1,18 @@
+.emojiGame-container {
+  background-image: linear-gradient(to right, #9796f0, #fbc7d4);
+  width: 700px;
+  height: 700px;
+  background-size: cover;
+  font-size: 'roboto';
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+.unordered-list-container {
+  list-style-type: none;
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 50px;
+}
