@@ -36,29 +36,13 @@ const cards = [
 let isClicked = false
 
 class EmojiGame extends Component {
-  state = {clickedEmojisList: [], score: 0, topScore: 0, finalScore: 0}
+  state = {clickedEmojisList: [], score: 0, topScore: 0}
 
   restartTheGame = () => {
-    this.setState({clickedEmojisList: [], score: 0})
     isClicked = false
-  }
-
-  emojiClicked = id => {
-    const {clickedEmojisList, topScore, score} = this.state
-    const {emojisList} = this.props
-    isClicked = clickedEmojisList.includes(id)
-
-    const shuffledEmojisList = emojisList.sort(() => Math.random() - 0.5)
-    this.setState({emojisList: shuffledEmojisList})
-
-    if (isClicked === false) {
-      return this.setState(prevState => ({
-        clickedEmojisList: [...prevState.clickedEmojisList, id],
-        score: prevState.score + 1,
-      }))
-    }
+    const {topScore, score} = this.state
     const updateTopScore = topScore > score ? topScore : score
-    this.setState({finalScore: score})
+
     return this.setState({
       score: 0,
       clickedEmojisList: [],
@@ -66,11 +50,29 @@ class EmojiGame extends Component {
     })
   }
 
+  emojiClicked = id => {
+    const {clickedEmojisList} = this.state
+    const {emojisList} = this.props
+    isClicked = clickedEmojisList.includes(id)
+
+    const shuffledEmojisList = emojisList.sort(() => Math.random() - 0.5)
+    this.setState({emojisList: shuffledEmojisList})
+
+    if (isClicked === false && clickedEmojisList.length < 12) {
+      return this.setState(prevState => ({
+        clickedEmojisList: [...prevState.clickedEmojisList, id],
+        score: prevState.score + 1,
+      }))
+    }
+
+    return this.setState(prevState => ({score: prevState.score}))
+  }
+
   getEmojiCards = () => {
     const {emojisList} = this.props
-    const {topScore, finalScore} = this.state
+    const {clickedEmojisList, score} = this.state
 
-    if (isClicked === false) {
+    if (clickedEmojisList.length < 12 && isClicked === false) {
       return (
         <div>
           <ul className="unordered-list-container">
@@ -85,11 +87,12 @@ class EmojiGame extends Component {
         </div>
       )
     }
-    if (emojisList.length === topScore) {
+
+    if (clickedEmojisList.length === 12) {
       return (
         <WinOrLoseCard
           cardDetails={cards[0]}
-          score={finalScore}
+          finalScore={score}
           restartTheGame={this.restartTheGame}
         />
       )
@@ -97,7 +100,7 @@ class EmojiGame extends Component {
     return (
       <WinOrLoseCard
         cardDetails={cards[1]}
-        score={finalScore}
+        finalScore={score}
         restartTheGame={this.restartTheGame}
       />
     )
@@ -105,9 +108,10 @@ class EmojiGame extends Component {
 
   render() {
     const {score, topScore} = this.state
+
     return (
       <div className="emojiGame-container">
-        <NavBar score={score} topScore={topScore} isClicked={isClicked} />
+        <NavBar score={score} topScore={topScore} hideNavBar={isClicked} />
         {this.getEmojiCards()}
       </div>
     )
