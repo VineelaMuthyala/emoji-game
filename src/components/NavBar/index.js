@@ -1,9 +1,9 @@
 import './index.css'
 
 const NavBar = props => {
-  const {score, topScore, isClicked} = props
+  const {score, topScore, hideNavBar} = props
 
-  if (isClicked) {
+  if (hideNavBar || score === 12) {
     return (
       <div className="nav-bar">
         <div className="emoji-logo-container">
@@ -29,8 +29,8 @@ const NavBar = props => {
         <h1 className="emoji-game-heading">Emoji Game</h1>
       </div>
       <div className="score-container">
-        <p className="score-text">Score:{score}</p>
-        <p className="score-text">Top Score:{topScore}</p>
+        <p className="score-text">Score: {score}</p>
+        <p className="score-text">Top Score: {topScore}</p>
       </div>
     </div>
   )
