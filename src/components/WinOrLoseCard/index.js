@@ -1,7 +1,7 @@
 import './index.css'
 
 const WinOrLoseCard = props => {
-  const {cardDetails, score, restartTheGame} = props
+  const {cardDetails, finalScore, restartTheGame} = props
   const {title, text, imageUrl} = cardDetails
 
   const playAgain = () => {
@@ -12,12 +12,12 @@ const WinOrLoseCard = props => {
       <div className="win-lose-card-text">
         <h1 className="title-text">{title}</h1>
         <p className="para">{text}</p>
-        <p>{score}/12</p>
+        <p>{finalScore}/12</p>
         <button className="button-card" type="button" onClick={playAgain}>
           Play Again
         </button>
       </div>
-      <img className="final-card-image" alt="title" src={imageUrl} />
+      <img className="final-card-image" alt="win or lose" src={imageUrl} />
     </div>
   )
 }
