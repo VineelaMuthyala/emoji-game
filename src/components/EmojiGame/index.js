@@ -33,50 +33,50 @@ const cards = [
   },
 ]
 
-let isClicked = false
-
 class EmojiGame extends Component {
-  state = {clickedEmojisList: [], score: 0, topScore: 0}
+  state = {clickedEmojisList: [], score: 0, topScore: 0, isClicked: false}
+
+  getShuffledList = () => {
+    const {emojisList} = this.props
+    return emojisList.sort(() => Math.random() - 0.5)
+  }
 
   restartTheGame = () => {
-    isClicked = false
     const {topScore, score} = this.state
     const updateTopScore = topScore > score ? topScore : score
-
     return this.setState({
       score: 0,
       clickedEmojisList: [],
       topScore: updateTopScore,
+      isClicked: false,
     })
   }
 
   emojiClicked = id => {
     const {clickedEmojisList} = this.state
     const {emojisList} = this.props
-    isClicked = clickedEmojisList.includes(id)
-
-    const shuffledEmojisList = emojisList.sort(() => Math.random() - 0.5)
-    this.setState({emojisList: shuffledEmojisList})
-
-    if (isClicked === false && clickedEmojisList.length < 12) {
+    const isPresent = clickedEmojisList.includes(id)
+    if (isPresent === false && clickedEmojisList.length < emojisList.length) {
       return this.setState(prevState => ({
         clickedEmojisList: [...prevState.clickedEmojisList, id],
         score: prevState.score + 1,
       }))
     }
-
-    return this.setState(prevState => ({score: prevState.score}))
+    return this.setState(prevState => ({
+      isClicked: !prevState.isClicked,
+    }))
   }
 
   getEmojiCards = () => {
+    const {clickedEmojisList, score, isClicked} = this.state
     const {emojisList} = this.props
-    const {clickedEmojisList, score} = this.state
+    const shuffledList = this.getShuffledList()
 
-    if (clickedEmojisList.length < 12 && isClicked === false) {
+    if (isClicked === false && clickedEmojisList.length < emojisList.length) {
       return (
         <div>
           <ul className="unordered-list-container">
-            {emojisList.map(eachEmoji => (
+            {shuffledList.map(eachEmoji => (
               <EmojiCard
                 key={eachEmoji.id}
                 emoji={eachEmoji}
@@ -88,7 +88,7 @@ class EmojiGame extends Component {
       )
     }
 
-    if (clickedEmojisList.length === 12) {
+    if (clickedEmojisList.length === emojisList.length) {
       return (
         <WinOrLoseCard
           cardDetails={cards[0]}
@@ -107,7 +107,7 @@ class EmojiGame extends Component {
   }
 
   render() {
-    const {score, topScore} = this.state
+    const {score, topScore, isClicked} = this.state
 
     return (
       <div className="emojiGame-container">
