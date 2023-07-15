@@ -2,6 +2,7 @@ import './index.css'
 
 const NavBar = props => {
   const {score, topScore, hideNavBar} = props
+  console.log(hideNavBar)
 
   if (hideNavBar || score === 12) {
     return (
